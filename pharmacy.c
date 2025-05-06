@@ -130,7 +130,7 @@ void sellMedicine() {
                 fwrite(&m, sizeof(Medicine), 1, f);
                 printf("Sale completed! Remaining stock: %d\n", m.quantity);
 
-                // Log the sale
+                
                 FILE *sales = fopen(SALES_FILE, "a");
                 fprintf(sales, "%d %d %.2f\n", id, qty, m.price);
                 fclose(sales);
