@@ -24,6 +24,8 @@ void generateSalesReport();
 void menu();
 
 void addMedicine() {
+    printf("\n======== Pharmacy Management System ======== \n");
+    printf("            *** Add Medicine ***\n");
     FILE *f = fopen(FILE_NAME, "a");
     Medicine m;
     printf("Enter Medicine ID: ");
@@ -40,9 +42,10 @@ void addMedicine() {
 }
 
 void viewMedicines() {
+    printf("\n======== Pharmacy Management System ======== \n");
     FILE *f = fopen(FILE_NAME, "r");
     Medicine m;
-    printf("\n=== All Medicines ===\n");
+    printf("            *** All Medicines ***\n");
     printf("%-5s %-20s %-10s %-10s\n", "ID", "Name", "Qty", "Price");
     while (fread(&m, sizeof(Medicine), 1, f)) {
         printf("%-5d %-20s %-10d %-10.2f\n", m.id, m.name, m.quantity, m.price);
@@ -51,23 +54,41 @@ void viewMedicines() {
 }
 
 void searchMedicine() {
+    printf("\n======== Pharmacy Management System ======== \n");
+
     FILE *f = fopen(FILE_NAME, "r");
     int id, found = 0;
     Medicine m;
+    printf("            *** Search Medicine ***\n");
+    if (f == NULL) {
+        printf("No medicines available.\n");
+        return;
+    }
     printf("Enter Medicine ID to search: ");
     scanf("%d", &id);
     while (fread(&m, sizeof(Medicine), 1, f)) {
         if (m.id == id) {
-            printf("Medicine Found: %s | Qty: %d | Price: %.2f\n", m.name, m.quantity, m.price);
+            // printf("Medicine Found: %s | Qty: %d | Price: %.2f\n", m.name, m.quantity, m.price);
+            printf("\n");
+            printf("ID: %d\n", m.id);
+            printf("Name: %s\n", m.name);
+            printf("Quantity: %d\n", m.quantity);
+            printf("Price: %.2f\n", m.price);
+
+
+
             found = 1;
             break;
         }
     }
     fclose(f);
-    if (!found) printf("Medicine not found!\n");
+    if (!found) printf("Medicine not found!\n ");
 }
 
 void updateMedicine() {
+    printf("\n======== Pharmacy Management System ======== \n");
+
+    printf("            *** Update Medicine ***\n");
     FILE *f = fopen(FILE_NAME, "r+");
     int id, found = 0;
     Medicine m;
@@ -93,6 +114,9 @@ void updateMedicine() {
 }
 
 void deleteMedicine() {
+    printf("\n======== Pharmacy Management System ======== \n");
+
+    printf("            *** Delete Medicine ***\n");
     FILE *f = fopen(FILE_NAME, "r");
     FILE *temp = fopen("temp.txt", "w");
     int id, found = 0;
@@ -115,6 +139,9 @@ void deleteMedicine() {
 }
 
 void sellMedicine() {
+    printf("\n======== Pharmacy Management System ======== \n");
+
+    printf("           *** Sell Medicine ***\n");
     FILE *f = fopen(FILE_NAME, "r+");
     int id, qty, found = 0;
     Medicine m;
@@ -148,6 +175,9 @@ void sellMedicine() {
 }
 
 void viewLowStock() {
+    printf("\n======== Pharmacy Management System ======== \n");
+
+    printf("            ***Low Stock Medicines ***\n");
     FILE *f = fopen(FILE_NAME, "r");
     Medicine m;
     printf("\n=== Low Stock Medicines (Less than 5) ===\n");
@@ -155,11 +185,17 @@ void viewLowStock() {
         if (m.quantity < 5) {
             printf("ID: %d | Name: %s | Qty: %d\n", m.id, m.name, m.quantity);
         }
+        else {
+            printf("No low stock medicines available.\n");
+        }
     }
     fclose(f);
 }
 
 void generateSalesReport() {
+    printf("\n======== Pharmacy Management System ======== \n");
+
+    printf("            *** Sales Report ***\n");
     FILE *f = fopen(SALES_FILE, "r");
     if (!f) {
         printf("No sales recorded yet.\n");
@@ -169,7 +205,7 @@ void generateSalesReport() {
     int id, qty, totalQty = 0;
     float price, totalRevenue = 0.0;
 
-    printf("\n=== Sales Report ===\n");
+    printf("\n");
     printf("%-5s %-10s %-10s\n", "ID", "Qty", "Price");
 
     while (fscanf(f, "%d %d %f\n", &id, &qty, &price) != EOF) {
@@ -186,18 +222,29 @@ void generateSalesReport() {
 void menu() {
     int choice;
     while (1) {
-        printf("\n====== Pharmacy Management System ======\n");
-        printf("1. Add Medicine\n");
-        printf("2. View All Medicines\n");
-        printf("3. Search Medicine\n");
-        printf("4. Update Medicine\n");
-        printf("5. Delete Medicine\n");
-        printf("6. Sell Medicine\n");
-        printf("7. View Low Stock\n");
-        printf("8. Generate Sales Report\n");
-        printf("9. Exit\n");
+        printf("\n======== Welcome to Pharmacy Management System ======== \n");
+        printf("     1. Add Medicine\n");
+        printf("     2. View All Medicines\n");
+        printf("     3. Search Medicine\n");
+        printf("     4. Update Medicine\n");
+        printf("     5. Delete Medicine\n");
+        printf("     6. Sell Medicine\n");
+        printf("     7. View Low Stock\n");
+        printf("     8. Generate Sales Report\n");
+        printf("     9. Exit\n");
         printf("Enter choice: ");
         scanf("%d", &choice);
+        if (choice < 1 || choice > 9) {
+            printf("Invalid choice! Please try again.\n");
+            continue;
+        }
+        for (int i = 0; i < 55; i++)
+        {
+            printf("=");
+        }
+        
+
+        printf("\n");
 
         switch (choice) {
             case 1: addMedicine(); break;
