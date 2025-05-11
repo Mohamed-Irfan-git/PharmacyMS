@@ -185,9 +185,7 @@ void viewLowStock() {
         if (m.quantity < 5) {
             printf("ID: %d | Name: %s | Qty: %d\n", m.id, m.name, m.quantity);
         }
-        else {
-            printf("No low stock medicines available.\n");
-        }
+    
     }
     fclose(f);
 }
